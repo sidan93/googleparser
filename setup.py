@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
   name='googleparser',
   packages=['googleparser'],
-  version='0.1',
+  version='0.2',
   license='MIT',
   description='Module for parsing google search results without access to Google Search API',
   long_description=long_description,
@@ -20,7 +20,6 @@ setuptools.setup(
     'requests',
     'beautifulsoup4',
     'urllib3'
-
   ],
   classifiers=[
     'Development Status :: 4 - Beta',      # "3 - Alpha", "4 - Beta" or "5 - Production/Stable"

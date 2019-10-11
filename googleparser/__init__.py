@@ -1,1 +1,1 @@
-from googleparser.googleparser import GoogleParser, GoogleResult
+from googleparser.googleparsersync import GoogleParser, GoogleResult

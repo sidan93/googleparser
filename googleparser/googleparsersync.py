@@ -1,39 +1,12 @@
-import re
 from typing import List
-from urllib.parse import unquote
 
 import requests
-from bs4 import BeautifulSoup, ResultSet
+from bs4 import BeautifulSoup
+
+from .googleresult import GoogleResult
 
 
-__all__ = ['GoogleResult', 'GoogleParser']
-
-
-class GoogleResult:
-    def __init__(self, index: int, title: str, link: str):
-        self.index = index
-        self.title = title
-        self.link = link
-
-    @staticmethod
-    def create_instance(index: int, block: ResultSet):
-        try:
-            title = block.find('div', {'class': 'BNeawe vvjwJb AP7Wnd'}).text
-            link = unquote(re.search(r'((https|http):\/\/[^&]*)', block.find('a').attrs.get('href'))[0])
-            return GoogleResult(
-                index,
-                title,
-                link
-            )
-        except:
-            pass
-
-    def __str__(self):
-        return '#{}. {}. Link: {}'.format(
-            self.index,
-            self.title,
-            self.link
-        )
+__all__ = ['GoogleParser']
 
 
 class GoogleParser:
@@ -51,7 +24,7 @@ class GoogleParser:
         # filtered class, for false position
         self.false_position_block = 'BNeawe vvjwJb AP7Wnd'
 
-    def query(self, search_string):
+    def query(self, search_string) -> List[GoogleResult]:
         link = 'https://google.com/search?q={}'.format(search_string)
         response = requests.get(link)
         self.body = response.content.decode('utf-8', errors='ignore')
@@ -69,9 +42,11 @@ class GoogleParser:
             if res:
                 self.results.append(res)
 
-    def get_str_results(self):
-        return [str(res) for res in self.results]
+    def get_str_results(self) -> str:
+        return '\n'.join([str(res) for res in self.results])
 
 
 if __name__ == '__main__':
-    print(*['\n' + str(res) for res in GoogleParser().query('bitcoin_price')])
+    gp = GoogleParser()
+    gp.query('bitcoin price')
+    print(gp.get_str_results())
