@@ -59,7 +59,7 @@ class GoogleParser:
         return self.results
 
     def _get_links_with_soup(self):
-        self.bs = BeautifulSoup(self.body)
+        self.bs = BeautifulSoup(self.body, 'html.parser')
         results = self.bs.find_all('div', {'class': self.top_position_block})
         results = list(filter(lambda i: self.false_position_block in str(i), results))
 

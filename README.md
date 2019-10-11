@@ -3,7 +3,7 @@ Module for parsing google search results without access to Google Search API
 
 # Simple Start for home project
 
-1. Install package from pip
+1. Install package from [pip](https://pypi.org/project/googleparser/)
 ```
 pip install googleparser
 ```
